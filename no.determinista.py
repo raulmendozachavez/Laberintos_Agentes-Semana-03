@@ -15,7 +15,6 @@ VECINOS = [(-1, 0), (0, 1), (1, 0), (0, -1)]
 
 RADIO_VISION = 2                         # el agente ve hasta 2 pasos a su alrededor
 FUERZA_PISTA = 1.0                       # cuánto pesa la pista (0 = sin pista)
-CORRIDAS = 3                             # cuántas veces se repite en el mismo laberinto
 
 
 # creacion del laberinto
@@ -149,20 +148,13 @@ if __name__ == "__main__":
     print("Laberinto generado (S=inicio, G=meta, #=obstáculo):\n")
     dibujar(grid)
 
-    rutas = []
-    # Se repite varias veces en el MISMO laberinto para comparar resultados
-    for n in range(1, CORRIDAS + 1):
-        ruta, explorados, retrocesos = navegar(grid)
+    ruta, explorados, retrocesos = navegar(grid)
 
-        print(f"\n=== Corrida {n} (*=ruta final, o=explorada y descartada) ===\n")
-        dibujar(grid, ruta, explorados)
+    print("\n=== Resultado (*=ruta final, o=explorada y descartada) ===\n")
+    dibujar(grid, ruta, explorados)
 
-        if ruta:
-            print(f"\nMeta alcanzada | movimientos de la ruta: {len(ruta) - 1} | "
-                  f"celdas exploradas: {len(explorados)} | retrocesos: {retrocesos}")
-        else:
-            print(f"\nSin salida | celdas exploradas: {len(explorados)} | retrocesos: {retrocesos}")
-
-        rutas.append(tuple(ruta) if ruta else None)
-
-    print(f"\nRutas distintas en {CORRIDAS} corridas sobre el mismo laberinto: {len(set(rutas))}")
+    if ruta:
+        print(f"\nMeta alcanzada | movimientos de la ruta: {len(ruta) - 1} | "
+              f"celdas exploradas: {len(explorados)} | retrocesos: {retrocesos}")
+    else:
+        print(f"\nSin salida | celdas exploradas: {len(explorados)} | retrocesos: {retrocesos}")
